@@ -29,6 +29,8 @@ The type shall be "Run: Custom script".
 In the Custom script content, enter the following:
 PathToExe\XamarinChangeBundleId.exe droid com.mydomain.myappname RelativePathToTheManifestFile
 
+When the update succeeded, the change will be written to the build log.
+
 # License
 Totally free!
 
