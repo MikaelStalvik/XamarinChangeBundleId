@@ -36,6 +36,29 @@ namespace XamarinChangeBundleId
                     {
                         ((XElement)element).Value = bundleId;
                     }
+
+                    var version = string.Empty;
+                    var verQry = from el in doc.Root.Element("dict").Elements("key")
+                        where el.Value == "CFBundleShortVersionString"
+                        select el.NextNode;
+                    element = verQry.FirstOrDefault();
+                    if (element != null)
+                    {
+                        version = ((XElement) element).Value;
+                    }
+                    if (!string.IsNullOrEmpty(version))
+                    {
+                        qry = from el in doc.Root.Element("dict").Elements("key")
+                            where el.Value == "CFBundleVersion"
+                              select el.NextNode;
+
+                        element = qry.FirstOrDefault();
+                        if (element != null)
+                        {
+                            ((XElement)element).Value = version;
+                        }
+                    }
+
                     File.WriteAllText(filename, doc.ToString());
                     Console.WriteLine($"Updated BundleId to {bundleId} for platform {platform}");
                 }
